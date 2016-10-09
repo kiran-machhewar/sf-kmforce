@@ -1,0 +1,29 @@
+<apex:page >
+    <apex:includeLightning />
+    <div id="lightning" />
+    <button type="button" onclick="callLightningEvent();">Call Lightning Code From VF</button>
+    <script>        
+        window.onload = function() {
+           $Lightning.use("c:LightningOutExampleApp", function() {               
+              var comapp=$Lightning.createComponent("c:LightningOutExample", 
+              {},             
+              "lightning",
+              function(component) {
+                console.log('Lightning out -->Component has been loaded.');
+                $A.eventService.addHandler({ "event": "c:lightningAppExternalEvent", "handler" : myFunctionFromVisualforce });                
+              });              
+            });            
+        }
+
+        function callLightningEvent(){
+            var lightningEvent = $A.get("e.c:lightningAppEvent");
+            lightningEvent.setParams({'data':{'TestDataKey':'TestDataValue'}});
+            lightningEvent.fire();
+        }
+
+        function myFunctionFromVisualforce (event){
+            console.log('This message is from visualforce function');
+            console.log('Data which is coming from lightning component',event.getParam('data'));
+        }
+    </script>
+</apex:page>

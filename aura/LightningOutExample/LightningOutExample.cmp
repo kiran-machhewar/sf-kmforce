@@ -1,0 +1,15 @@
+<aura:component controller="LightningOutExampleController">
+    <aura:attribute name="contacts" type="Contact[]" default="[]"></aura:attribute>
+
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}" />
+
+    <aura:handler event="c:lightningAppEvent" action="{!c.lightningAppEventHandler}"/>
+
+    <aura:registerEvent name="lightningAppExternalEvent" type="c:lightningAppExternalEvent" />
+
+    <aura:iteration items="{!v.contacts}" var="contact">
+        <h1>{!contact.Name}</h1><br/>
+    </aura:iteration> 
+    <ui:button label="Call Visualforce code from Lightning" press="{!c.callExternalFunction}"/>
+   
+</aura:component>
